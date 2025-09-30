@@ -135,7 +135,6 @@ def redeploy_databricks_app(app_name: str, source_code_path: str = None) -> dict
             "app_name": app_name,
             "deployment_id": deployment.deployment_id,
             "source_code_path": source_code_path,
-            "status": deployment.status.value if deployment.status else "unknown",
             "success": True
         }
     except Exception as e:
