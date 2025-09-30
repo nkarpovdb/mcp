@@ -202,7 +202,7 @@ def stop_databricks_app(app_name: str) -> dict:
         
         return {
             "app_name": app_name,
-            "status": app.compute_status.value if app.compute_status else "unknown",
+            "status": app.compute_status.message if app.compute_status else "unknown",
             "success": True
         }
     except Exception as e:
