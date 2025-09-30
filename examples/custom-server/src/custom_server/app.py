@@ -242,7 +242,7 @@ def upload_workspace_file(path: str, content: str, is_binary: bool = False, over
         from databricks.sdk.service.workspace import ImportFormat, Language
         
         # Default format
-        format = ImportFormat.SOURCE
+        format = ImportFormat.AUTO
         
         # Set language if specified
         language_enum = None
