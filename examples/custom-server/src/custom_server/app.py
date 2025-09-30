@@ -37,7 +37,6 @@ def list_databricks_apps() -> list[dict]:
             app_info = {
                 "name": app.name,
                 "description": app.description,
-                "status": app.app_status.message,
                 "app_url": app.url,
                 "source_code_path": app.active_deployment.source_code_path
             }
