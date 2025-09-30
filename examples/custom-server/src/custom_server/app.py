@@ -37,12 +37,9 @@ def list_databricks_apps() -> list[dict]:
             app_info = {
                 "name": app.name,
                 "description": app.description,
-                "status": app.status.value if app.status else None,
-                "app_url": app.app_url,
-                "created_by": app.created_by,
-                "updated_by": app.updated_by,
-                "created_time": app.created_time,
-                "updated_time": app.updated_time
+                "status": app.app_status.message,
+                "app_url": app.url,
+                "source_code_path": app.active_deployment.source_code_path
             }
             app_list.append(app_info)
         
