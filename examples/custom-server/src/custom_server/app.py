@@ -2,6 +2,7 @@ from pathlib import Path
 from mcp.server.fastmcp import FastMCP
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
+from databricks.sdk import WorkspaceClient
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -21,6 +22,33 @@ def add(a: int, b: int) -> int:
 def get_greeting(name: str) -> str:
     """Get a personalized greeting"""
     return f"Hello, {name}!"
+
+
+# Add a tool to list Databricks apps
+@mcp.tool()
+def list_databricks_apps() -> list[dict]:
+    """List all Databricks apps in the workspace"""
+    try:
+        w = WorkspaceClient()
+        apps = w.apps.list()
+        
+        app_list = []
+        for app in apps:
+            app_info = {
+                "name": app.name,
+                "description": app.description,
+                "status": app.status.value if app.status else None,
+                "app_url": app.app_url,
+                "created_by": app.created_by,
+                "updated_by": app.updated_by,
+                "created_time": app.created_time,
+                "updated_time": app.updated_time
+            }
+            app_list.append(app_info)
+        
+        return app_list
+    except Exception as e:
+        return [{"error": f"Failed to list apps: {str(e)}"}]
 
 
 mcp_app = mcp.streamable_http_app()
